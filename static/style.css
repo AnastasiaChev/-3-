@@ -1,0 +1,528 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    color: #1f61a0;
+    margin-bottom: 30px;
+}
+
+.books-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.book-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.book-card:hover {
+    transform: translateY(-5px);
+}
+
+.book-cover img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+.book-info {
+    padding: 15px;
+    text-align: center;
+}
+
+.book-title {
+    font-size: 16px;
+    margin: 10px 0;
+    font-weight: 500;
+    color: #222;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btn-download {
+    display: inline-block;
+    background-color: #1f61a0;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.btn-download:hover {
+    background-color: #154a7d;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.pagination-btn {
+    padding: 8px 14px;
+    border: 1px solid #ddd;
+    text-decoration: none;
+    color: #333;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.pagination-btn:hover {
+    background-color: #e9e9e9;
+}
+
+.pagination-btn.active {
+    background-color: #1f61a0;
+    color: white;
+    border-color: #1f61a0;
+}
+
+.pagination-btn.active:hover {
+    background-color: #154a7d;
+}
+
+/* Панель фильтрации*/
+.filter-panel {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.filter-panel h3 {
+    margin: 0 0 15px 0;
+    color: #1f61a0;
+}
+
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    background: #f0f0f0;
+    color: #333;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover {
+    background: #e0e0e0;
+}
+
+.filter-btn.active {
+    background: #1f61a0;
+    color: white;
+}
+
+.filter-btn.active:hover {
+    background: #154a7d;
+}
+
+.book-author {
+    font-size: 14px;
+    color: #666;
+    margin: 5px 0;
+}
+
+/* Общий контейнер приложения */
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Боковая панель */
+.sidebar {
+    width: 250px;
+    background: #2c3e50;
+    color: white;
+    padding: 20px 0;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.sidebar-header {
+    padding: 0 20px 20px;
+    border-bottom: 1px solid #34495e;
+}
+
+.sidebar-header h2 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-nav li {
+    padding: 0;
+}
+
+.sidebar-nav a {
+    display: block;
+    padding: 12px 20px;
+    color: #ecf0f1;
+    text-decoration: none;
+    transition: background 0.2s;
+    font-weight: 500;
+}
+
+.sidebar-nav a:hover {
+    background: #34495e;
+}
+
+.sidebar-nav a.active {
+    background: #1abc9c;
+    color: white;
+    border-left: 4px solid #16a085;
+}
+
+/* Основной контент */
+.main-content {
+    flex: 1;
+    margin-left: 250px; /* сдвигаем, чтобы не наезжало на sidebar */
+    padding: 30px;
+    background: #f5f5f5;
+}
+
+/* Заголовок страницы */
+.page-header {
+    margin-bottom: 30px;
+}
+
+.page-header h1 {
+    color: #1f61a0;
+    margin: 0 0 10px 0;
+}
+
+.page-header p {
+    color: #666;
+    margin: 0;
+}
+
+/* Админ-каталог */
+.admin-catalog {
+    display: grid;
+    gap: 15px;
+}
+
+.admin-file-card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    font-family: monospace;
+    font-size: 14px;
+}
+
+
+/* Панель поиска */
+.search-panel {
+    margin-bottom: 25px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.search-panel form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.search-panel input[type="text"] {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    flex: 1;
+    min-width: 200px;
+}
+
+.search-panel button,
+.search-panel a {
+    padding: 8px 16px;
+    background: #1f61a0;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.search-panel a {
+    background: #6c757d;
+}
+
+.search-panel button:hover {
+    background: #154a7d;
+}
+
+.search-panel a:hover {
+    background: #5a6268;
+}
+
+/* Управление файлами */
+.alert {
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.alert-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.upload-panel {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+}
+
+.upload-panel h3 {
+    margin-top: 0;
+    color: #1f61a0;
+}
+
+.upload-panel input[type="file"] {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.upload-panel button {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.upload-panel button:hover {
+    background: #218838;
+}
+
+.file-list {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.file-list h3 {
+    margin-top: 0;
+    color: #1f61a0;
+}
+
+.file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.file-item:last-child {
+    border-bottom: none;
+}
+
+.btn-delete {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-delete:hover {
+    background: #c82333;
+}
+
+.upload-panel label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: 500;
+    color: #333;
+}
+
+.upload-panel input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Подтверждение удаления */
+.delete-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* Запрещаем выход за пределы */
+    overflow: visible;
+}
+
+.confirm-box {
+    position: absolute;
+    top: -40px;
+    /* Позиционируем слева, а не справа */
+    right: 0;
+    transform: translateX(0); /* не сдвигаем вправо */
+
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 8px 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 10;
+    white-space: nowrap;
+    /* Гарантируем, что не выйдет за левый край */
+    min-width: max-content;
+}
+
+/* Дополнительная защита: если окно всё же не помещается — сдвигаем влево */
+@media (min-width: 768px) {
+    .confirm-box {
+        right: 0;
+        left: auto;
+    }
+}
+
+.btn-confirm-yes {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.btn-confirm-yes:hover {
+    background: #c82333;
+}
+
+.btn-confirm-no {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.btn-confirm-no:hover {
+    background: #5a6268;
+}
+
+/* Рейтинг скачиваний */
+.rating-table {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+.rating-header,
+.rating-row {
+    display: grid;
+    grid-template-columns: 60px 2fr 1fr 100px;
+    padding: 12px 20px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+.rating-header {
+    background: #f8f9fa;
+    font-weight: bold;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.rating-row:last-child {
+    border-bottom: none;
+}
+
+.rating-row small {
+    color: #6c757d;
+    font-size: 0.85em;
+}
+
+/* Журнал действий */
+.log-table {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+.log-header,
+.log-row {
+    display: grid;
+    grid-template-columns: 180px 150px 1fr;
+    padding: 10px 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.log-header {
+    background: #f8f9fa;
+    font-weight: bold;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.log-row:last-child {
+    border-bottom: none;
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}📚 Электронная библиотека{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Боковая панель -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 Библиотека</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="{{ url_for('index') }}" class="{% if request.endpoint == 'index' %}active{% endif %}">
+                            📖 Все книги
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('filter_books') }}" class="{% if request.endpoint == 'filter_books' %}active{% endif %}">
+                            🧭 Фильтр по темам
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="{{ url_for('admin_catalog') }}" class="{% if request.endpoint == 'admin_catalog' %}active{% endif %}">
+                            🔍 Каталог (админ)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('admin_manage') }}" class="{% if request.endpoint == 'admin_manage' %}active{% endif %}">
+                            🛠️ Добавление/удаление файлов (админ)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('admin_rating') }}" class="{% if request.endpoint == 'admin_rating' %}active{% endif %}">
+                            🏆 Рейтинг скачиваний
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('admin_log') }}" class="{% if request.endpoint == 'admin_log' %}active{% endif %}">
+                            📋 Журнал действий
+                        </a>
+                    </li>
+                                        
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Основной контент -->
+        <main class="main-content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <script>
+    function showConfirm(button, filename) {
+        // Находим ближайший .confirm-box и показываем его
+        const wrapper = button.closest('.delete-wrapper');
+        const confirmBox = wrapper.querySelector('.confirm-box');
+        confirmBox.style.display = 'flex';
+        button.style.display = 'none'; // прячем кнопку "Удалить"
+    }
+
+    function hideConfirm(button) {
+        const wrapper = button.closest('.delete-wrapper');
+        const confirmBox = wrapper.querySelector('.confirm-box');
+        const deleteBtn = wrapper.querySelector('button[type="button"]');
+        confirmBox.style.display = 'none';
+        deleteBtn.style.display = 'inline-block';
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+{% extends "admin_base.html" %}
+
+{% block title %}🔐 Админ — Каталог файлов{% endblock %}
+
+{% block admin_content %}
+    <div class="page-header">
+        <h1>🔐 Каталог файлов</h1>
+        <p>Полный список файлов в папке <code>books/</code></p>
+    </div>
+
+    <div class="search-panel">
+        <form method="GET">
+            <input type="text" name="q" value="{{ search_query }}" placeholder="Поиск по имени файла..." />
+            <button type="submit">Найти</button>
+            {% if search_query %}
+            <a href="{{ url_for('admin_catalog') }}">Сбросить</a>
+            {% endif %}
+        </form>
+    </div>
+
+    <div class="admin-catalog">
+        {% for item in catalog %}
+        <div class="admin-file-card">
+            <div class="file-info">
+                <strong>{{ item.filename }}</strong><br>
+                Размер: {{ item.size_mb }} МБ<br>
+                Изменён: {{ item.modified }}<br>
+                Обложка: {% if item.cover_exists %}✅ есть{% else %}❌ нет{% endif %}<br>
+                Метаданные: {% if item.has_metadata %}✅ есть ({{ item.metadata.topic or 'без темы' }}){% else %}❌ нет{% endif %}
+            </div>
+        </div>
+        {% else %}
+        <p>Файлы не найдены.</p>
+        {% endfor %}
+    </div>
+
+    {% if total_pages > 1 %}
+    <div class="pagination">
+        {% if page > 1 %}
+        <a href="{{ url_for('admin_catalog', page=page-1, q=search_query) }}" class="pagination-btn">← Предыдущая</a>
+        {% endif %}
+
+        {% for p in pagination_range %}
+        <a href="{{ url_for('admin_catalog', page=p, q=search_query) }}" class="pagination-btn {% if p == page %}active{% endif %}">{{ p }}</a>
+        {% endfor %}
+
+        {% if page < total_pages %}
+        <a href="{{ url_for('admin_catalog', page=page+1, q=search_query) }}" class="pagination-btn">Следующая →</a>
+        {% endif %}
+    </div>
+    {% endif %}
+{% endblock %}

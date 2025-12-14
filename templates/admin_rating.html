@@ -1,0 +1,31 @@
+{% extends "admin_base.html" %}
+
+{% block title %}🏆 Рейтинг скачиваний{% endblock %}
+
+{% block admin_content %}
+    <div class="page-header">
+        <h1>🏆 Рейтинг скачиваний</h1>
+        <p>Топ самых популярных книг</p>
+    </div>
+
+    {% if rating %}
+    <div class="rating-table">
+        <div class="rating-header">
+            <div>Место</div>
+            <div>Название</div>
+            <div>Автор</div>
+            <div>Скачиваний</div>
+        </div>
+        {% for item in rating %}
+        <div class="rating-row">
+            <div>{{ loop.index }}</div>
+            <div><strong>{{ item.title }}</strong><br><small>{{ item.filename }}</small></div>
+            <div>{{ item.author }}</div>
+            <div><strong>{{ item.count }}</strong></div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>Ещё ни одна книга не была скачана.</p>
+    {% endif %}
+{% endblock %}

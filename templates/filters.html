@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}🧭 Фильтр по темам{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>🧭 Фильтрация по темам</h1>
+        <p>Выберите тему, чтобы отобразить соответствующие книги</p>
+    </div>
+
+    <!-- Панель фильтрации по темам -->
+    <div class="filter-panel">
+        <h3>Темы:</h3>
+        <div class="filter-buttons">
+            <a href="{{ url_for('filter_books', topic='all') }}" class="filter-btn {% if current_topic == 'all' or not current_topic %}active{% endif %}">
+                Все темы
+            </a>
+            {% for topic in topics %}
+            <a href="{{ url_for('filter_books', topic=topic) }}" class="filter-btn {% if current_topic == topic %}active{% endif %}">
+                {{ topic|title }}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="books-grid">
+        {% for book in books %}
+        <div class="book-card">
+            <div class="book-cover">
+                {% if book.cover %}
+                    <img src="{{ url_for('static', filename='covers/' + book.cover) }}" alt="Обложка {{ book.filename }}">
+                {% else %}
+                    <img src="https://via.placeholder.com/120x180?text=📖+Нет+обложки" alt="Обложка отсутствует">
+                {% endif %}
+            </div>
+            <div class="book-info">
+                <h3 class="book-title">
+                    {{ book.metadata.title if book.metadata.title else book.filename.rsplit('.', 1)[0] }}
+                </h3>
+                {% if book.metadata.author %}
+                <p class="book-author">Автор: {{ book.metadata.author }}</p>
+                {% endif %}
+                <a href="{{ url_for('download_file', filename=book.filename) }}" class="btn-download">
+                    📥 Скачать
+                </a>
+            </div>
+        </div>
+        {% else %}
+        <p>Нет доступных книг по выбранному фильтру.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Пагинация -->
+    {% if total_pages > 1 %}
+    <div class="pagination">
+        {% if page > 1 %}
+        <a href="{{ url_for('filter_books', page=page-1, topic=current_topic) }}" class="pagination-btn">← Предыдущая</a>
+        {% endif %}
+
+        {% for p in pagination_range %}
+        <a href="{{ url_for('filter_books', page=p, topic=current_topic) }}" class="pagination-btn {% if p == page %}active{% endif %}">{{ p }}</a>
+        {% endfor %}
+
+        {% if page < total_pages %}
+        <a href="{{ url_for('filter_books', page=page+1, topic=current_topic) }}" class="pagination-btn">Следующая →</a>
+        {% endif %}
+    </div>
+    {% endif %}
+{% endblock %}

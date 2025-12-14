@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}📚 Все книги{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>📖 Все книги</h1>
+        <p>Постраничный просмотр всех доступных файлов</p>
+    </div>
+
+    <div class="books-grid">
+        {% for book in books %}
+        <div class="book-card">
+            <div class="book-cover">
+                {% if book.cover %}
+                    <img src="{{ url_for('static', filename='covers/' + book.cover) }}" alt="Обложка {{ book.filename }}">
+                {% else %}
+                    <img src="https://via.placeholder.com/120x180?text=📖+Нет+обложки" alt="Обложка отсутствует">
+                {% endif %}
+            </div>
+            <div class="book-info">
+                <h3 class="book-title">
+                    {{ book.metadata.title if book.metadata.title else book.filename.rsplit('.', 1)[0] }}
+                </h3>
+                {% if book.metadata.author %}
+                <p class="book-author">Автор: {{ book.metadata.author }}</p>
+                {% endif %}
+                <a href="{{ url_for('download_file', filename=book.filename) }}" class="btn-download">
+                    📥 Скачать
+                </a>
+            </div>
+        </div>
+        {% else %}
+        <p>Нет доступных книг.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Пагинация -->
+    {% if total_pages > 1 %}
+    <div class="pagination">
+        {% if page > 1 %}
+        <a href="{{ url_for('index', page=page-1) }}" class="pagination-btn">← Предыдущая</a>
+        {% endif %}
+
+        {% for p in pagination_range %}
+        <a href="{{ url_for('index', page=p) }}" class="pagination-btn {% if p == page %}active{% endif %}">{{ p }}</a>
+        {% endfor %}
+
+        {% if page < total_pages %}
+        <a href="{{ url_for('index', page=page+1) }}" class="pagination-btn">Следующая →</a>
+        {% endif %}
+    </div>
+    {% endif %}
+{% endblock %}
